@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .first {
+            background-color: red;
+            animation: colorChange 2s ease 2s;
+        }
+
+        .last {
+            background-color: green;
+            animation: colorChange 2s ease 2s;
+        }
+
+        @keyframes colorChange {
+            from { background-color: inherit; }
+            to { background-color: inherit; }
+        }
+    </style>
+    <title>Emmet Pattern Modification</title>
+</head>
+<body>
+
+<script>
+    function setFirstItemClassName(level) {
+        const root = document.querySelector('.root');
+        if (!root) return;
+
+        const lis = root.querySelectorAll('li');
+
+        lis.forEach(li => {
+            const ul = li.querySelector('ul');
+            if (ul && parseInt(li.dataset.level) === level) {
+                const firstLi = ul.querySelector('li:first-child');
+                if (firstLi) {
+                    firstLi.classList.add('first');
+                }
+
+                const lastLi = ul.querySelector('li:last-child');
+                if (lastLi) {
+                    lastLi.classList.add('last');
+                }
+            }
+        });
+    }
+
+    document.body.innerHTML = 'ul.root>li{Item $}*3>ul*2>li{Item $}*5';
+
+    const lis = document.querySelectorAll('.root li');
+    lis.forEach((li, index) => li.dataset.level = Math.floor(index / 15) + 1);
+
+    setFirstItemClassName(2);
+</script>
+
+</body>
+</html>
